@@ -16,7 +16,7 @@ Usage:
 </config>
 ```
 
-1. Implement the manager service for your extension attribute:
+2. Implement the manager service for your extension attribute:
 Simply create a class which implements the `Tkotosz\ExtensionAttributeManager\Api\ProductExtensionAttributeManagerInterface`.
 Available methods:
 - onGetProduct(ProductInterface $product): Called when a product is loaded via the Product Repository
@@ -31,7 +31,8 @@ Available methods:
 
 In each method you can access the `$product->getExtensionAttributes()` to get or set your extension attribute. E.g. `$product->getExtensionAttributes()->setCustomField('my custom value');`.
 
-1. Register your manager service in the DI (in your module's `etc/di.xml`):
+
+3. Register your manager service in the DI (in your module's `etc/di.xml`):
 ```
 <type name="Tkotosz\ExtensionAttributeManager\Container\ProductExtensionAttributeManagerContainer">
     <arguments>
