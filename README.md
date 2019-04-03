@@ -18,6 +18,7 @@ Usage:
 
 2. Implement the manager service for your extension attribute:
 Simply create a class which implements the `Tkotosz\ExtensionAttributeManager\Api\ProductExtensionAttributeManagerInterface`.
+
 Available methods:
 - onGetProduct(ProductInterface $product): Called when a product is loaded via the Product Repository
 
