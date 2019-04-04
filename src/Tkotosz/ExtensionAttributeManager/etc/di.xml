@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Tkotosz\ExtensionAttributeManager\Api\ProductExtensionAttributeManagerContainerInterface" type="Tkotosz\ExtensionAttributeManager\Container\ProductExtensionAttributeManagerContainer"/>
+    <preference for="Tkotosz\ExtensionAttributeManager\Api\ProductExtensionAttribute\ManagerContainerInterface" type="Tkotosz\ExtensionAttributeManager\Container\ProductExtensionAttribute\ManagerContainer"/>
 
     <type name="Magento\Catalog\Api\Data\ProductInterface">
         <plugin name="tkotosz_init_product_extension_attributes" type="Tkotosz\ExtensionAttributeManager\Plugin\Product\InitExtensionAttributes"/>

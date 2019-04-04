@@ -1,11 +1,11 @@
 <?php
 
-namespace Tkotosz\ExtensionAttributeManager\Api;
+namespace Tkotosz\ExtensionAttributeManager\Api\ProductExtensionAttribute;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\Api\SearchResultsInterface;
 
-interface ProductExtensionAttributeManagerInterface
+interface ManagerInterface
 {
     public function onGetProduct(ProductInterface $product);
 

@@ -5,27 +5,26 @@ namespace Tkotosz\ExtensionAttributeManager\Plugin\ProductRepository;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Api\SearchResultsInterface;
-use Tkotosz\ExtensionAttributeManager\Api\ProductExtensionAttributeManagerContainerInterface;
+use Tkotosz\ExtensionAttributeManager\Api\ProductExtensionAttribute\ManagerContainerInterface;
 
 class ManageExtensionAttributes
 {
     /**
-     * @var ProductExtensionAttributeManagers
+     * @var ManagerContainerInterface
      */
-    private $productExtensionAttributeManagerProvider;
+    private $productExtensionAttributeManagerContainer;
 
     /**
-     * @param ProductExtensionAttributeManagerContainerInterface $productExtensionAttributeManagerProvider
+     * @param ManagerContainerInterface $productExtensionAttributeManagerContainer
      */
-    public function __construct(
-        ProductExtensionAttributeManagerContainerInterface $productExtensionAttributeManagerProvider
-    ) {
-        $this->productExtensionAttributeManagerProvider = $productExtensionAttributeManagerProvider;
+    public function __construct(ManagerContainerInterface $productExtensionAttributeManagerContainer)
+    {
+        $this->productExtensionAttributeManagerContainer = $productExtensionAttributeManagerContainer;
     }
 
     public function afterGet(ProductRepositoryInterface $productRepository, ProductInterface $product): ProductInterface
     {
-        foreach ($this->productExtensionAttributeManagerProvider->getAll() as $productExtensionAttributeManager) {
+        foreach ($this->productExtensionAttributeManagerContainer->getAll() as $productExtensionAttributeManager) {
             $productExtensionAttributeManager->onGetProduct($product);
         }
 
@@ -34,7 +33,7 @@ class ManageExtensionAttributes
 
     public function afterGetById(ProductRepositoryInterface $productRepository, ProductInterface $product): ProductInterface
     {
-        foreach ($this->productExtensionAttributeManagerProvider->getAll() as $productExtensionAttributeManager) {
+        foreach ($this->productExtensionAttributeManagerContainer->getAll() as $productExtensionAttributeManager) {
             $productExtensionAttributeManager->onGetProduct($product);
         }
 
@@ -47,7 +46,7 @@ class ManageExtensionAttributes
             return $productSearchResults;
         }
 
-        foreach ($this->productExtensionAttributeManagerProvider->getAll() as $productExtensionAttributeManager) {
+        foreach ($this->productExtensionAttributeManagerContainer->getAll() as $productExtensionAttributeManager) {
             $productExtensionAttributeManager->onGetProductList($productSearchResults);
         }
 
@@ -56,7 +55,7 @@ class ManageExtensionAttributes
 
     public function afterSave(ProductRepositoryInterface $productRepository, ProductInterface $product): ProductInterface
     {
-        foreach ($this->productExtensionAttributeManagerProvider->getAll() as $productExtensionAttributeManager) {
+        foreach ($this->productExtensionAttributeManagerContainer->getAll() as $productExtensionAttributeManager) {
             $productExtensionAttributeManager->onSaveProduct($product);
         }
 
@@ -68,7 +67,7 @@ class ManageExtensionAttributes
         $isDeleted = $proceed($product);
 
         if ($isDeleted) {
-            foreach ($this->productExtensionAttributeManagerProvider->getAll() as $productExtensionAttributeManager) {
+            foreach ($this->productExtensionAttributeManagerContainer->getAll() as $productExtensionAttributeManager) {
                 $productExtensionAttributeManager->onDeleteProduct($product);
             }
         }
@@ -83,7 +82,7 @@ class ManageExtensionAttributes
         $isDeleted = $proceed($sku);
 
         if ($isDeleted) {
-            foreach ($this->productExtensionAttributeManagerProvider->getAll() as $productExtensionAttributeManager) {
+            foreach ($this->productExtensionAttributeManagerContainer->getAll() as $productExtensionAttributeManager) {
                 $productExtensionAttributeManager->onDeleteProduct($product);
             }
         }
