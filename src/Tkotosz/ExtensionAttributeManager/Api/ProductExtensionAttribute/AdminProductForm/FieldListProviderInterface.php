@@ -3,7 +3,7 @@
 namespace Tkotosz\ExtensionAttributeManager\Api\ProductExtensionAttribute\AdminProductForm;
 
 use Magento\Catalog\Api\Data\ProductInterface;
-use Tkotosz\ExtensionAttributeManager\Model\Product\Form\FieldList;
+use Tkotosz\ExtensionAttributeManager\Model\Product\Form\Field;
 
 interface FieldListProviderInterface
 {
@@ -13,11 +13,13 @@ interface FieldListProviderInterface
     public function getFieldSetId(): string;
 
     /**
-     * @return FieldList[]
+     * @return Field[]
      */
     public function getFieldList(): array;
 
     /**
+     * @param ProductInterface $product
+     *
      * @return array field id - value pairs
      */
     public function getFieldValues(ProductInterface $product): array;

@@ -29,28 +29,12 @@ class FieldSetManager extends AbstractModifier
     public function modifyMeta(array $meta)
     {
         foreach ($this->fieldSetProviderContainer->getAll() as $fieldSetProvider) {
-            $meta = array_merge($meta, $this->transformToUiComponentConfigArray($fieldSetProvider->getFieldSet()));
+            $meta = array_merge(
+                $meta,
+                $fieldSetProvider->getFieldSet()->toUiComponentConfigArray()
+            );
         }
 
         return $meta;
-    }
-
-    private function transformToUiComponentConfigArray(FieldSet $fieldSet): array
-    {
-        return [
-            $fieldSet->getId() => [
-                'arguments' => [
-                    'data' => [
-                        'config' => [
-                            'label' => $fieldSet->getLabel(),
-                            'componentType' => UiComponentFieldSet::NAME,
-                            'dataScope' => self::DATA_SCOPE_PRODUCT . '.' . $fieldSet->getId(),
-                            'collapsible' => true,
-                            'sortOrder' => 1000 // TODO
-                        ]
-                    ]
-                ]
-            ]
-        ];
     }
 }

@@ -54,36 +54,16 @@ class FieldListManager extends AbstractModifier
                 );
             }
 
-            $meta[$fieldListProvider->getFieldSetId()]['children'] = array_merge(
-                $meta[$fieldListProvider->getFieldSetId()]['children'] ?? [],
-                $this->transformToUiComponentConfigArray($fieldListProvider->getFieldList())
-            );
+            if (!isset($meta[$fieldListProvider->getFieldSetId()]['children'])) {
+                $meta[$fieldListProvider->getFieldSetId()]['children'] = [];
+            }
+
+            $fieldConfigs = &$meta[$fieldListProvider->getFieldSetId()]['children'];
+            foreach ($fieldListProvider->getFieldList() as $field) {
+                $fieldConfigs = array_merge($fieldConfigs, $field->toUiComponentConfigArray());
+            }
         }
 
         return $meta;
-    }
-
-    private function transformToUiComponentConfigArray(array $fieldList): array
-    {
-        $fieldsConfig = [];
-
-        foreach ($fieldList as $field) {
-            $fieldsConfig[$field->getId()] = [
-                'arguments' => [
-                    'data' => [
-                        'config' => [
-                            'label' => __($field->getLabel()),
-                            'componentType' => UiComponentField::NAME,
-                            'formElement' => Input::NAME, // TODO
-                            'dataType' => Text::NAME, // TODO
-                            'dataScope' => $field->getId(),
-                            'sortOrder' => 1000, // TODO
-                        ],
-                    ],
-                ],
-            ];
-        }
-
-        return $fieldsConfig;
     }
 }

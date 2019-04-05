@@ -2,6 +2,8 @@
 
 namespace Tkotosz\ExtensionAttributeManager\Model\Product\Form;
 
+use Magento\Ui\Component\Form\Fieldset as UiComponentFieldSet;
+
 class FieldSet
 {
     /** @var string */
@@ -10,19 +12,39 @@ class FieldSet
     /** @var string */
     private $label;
 
-    public function __construct(string $id, string $label)
+    /**
+     * @var int
+     */
+    private $sortOrder;
+    /**
+     * @var bool
+     */
+    private $collapsible;
+
+    public function __construct(string $id, string $label, int $sortOrder = 1000, bool $collapsible = true)
     {
         $this->id = $id;
         $this->label = $label;
+        $this->sortOrder = $sortOrder;
+        $this->collapsible = $collapsible;
     }
 
-    public function getId(): string
+    public function toUiComponentConfigArray(): array
     {
-        return $this->id;
-    }
-
-    public function getLabel(): string
-    {
-        return $this->label;
+        return [
+            $this->id => [
+                'arguments' => [
+                    'data' => [
+                        'config' => [
+                            'label' => $this->label,
+                            'componentType' => UiComponentFieldSet::NAME,
+                            'dataScope' => 'data.product.' . $this->id,
+                            'collapsible' => $this->collapsible,
+                            'sortOrder' => $this->sortOrder
+                        ]
+                    ]
+                ]
+            ]
+        ];
     }
 }

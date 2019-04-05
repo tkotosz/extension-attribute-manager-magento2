@@ -2,45 +2,23 @@
 
 namespace Tkotosz\ExtensionAttributeManager\Model\Product\Form;
 
-class Field
+abstract class Field
 {
     /** @var string */
-    private $id;
+    protected $id;
 
     /** @var string */
-    private $label;
+    protected $label;
 
-    /** @var array */
-    private $options;
+    /** @var int*/
+    protected $sortOrder;
 
-    public function __construct(string $id, string $label, array $options)
+    public function __construct(string $id, string $label, int $sortOrder = 1)
     {
         $this->id = $id;
         $this->label = $label;
-        $this->options = $options;
+        $this->sortOrder = $sortOrder;
     }
 
-    /**
-     * @return string
-     */
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLabel(): string
-    {
-        return $this->label;
-    }
-
-    /**
-     * @return array
-     */
-    public function getOptions(): array
-    {
-        return $this->options;
-    }
+    abstract public function toUiComponentConfigArray(): array;
 }
