@@ -3,10 +3,13 @@
 namespace Tkotosz\ExtensionAttributeManager\Api\ProductExtensionAttribute\AdminProductForm;
 
 use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\AbstractModifier;
 use Tkotosz\ExtensionAttributeManager\Model\Product\Form\Field;
 
 interface FieldListProviderInterface
 {
+    public const DEFAULT_GENERAL_PANEL = AbstractModifier::DEFAULT_GENERAL_PANEL;
+
     /**
      * @return string
      */

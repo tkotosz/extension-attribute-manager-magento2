@@ -39,7 +39,18 @@ class FieldListManager extends AbstractModifier
         $product = $this->locator->getProduct();
 
         foreach ($this->fieldListProviderContainer->getAll() as $fieldListProvider) {
-            $data[$product->getId()][self::DATA_SOURCE_DEFAULT][$fieldListProvider->getFieldSetId()] = $fieldListProvider->getFieldValues($product);
+
+            if ($fieldListProvider->getFieldSetId() === self::DEFAULT_GENERAL_PANEL) {
+                $data[$product->getId()][self::DATA_SOURCE_DEFAULT] = array_merge(
+                    $data[$product->getId()][self::DATA_SOURCE_DEFAULT] ?? [],
+                    $fieldListProvider->getFieldValues($product)
+                );
+            } else {
+                $data[$product->getId()][self::DATA_SOURCE_DEFAULT][$fieldListProvider->getFieldSetId()] = array_merge(
+                    $data[$product->getId()][self::DATA_SOURCE_DEFAULT][$fieldListProvider->getFieldSetId()] ?? [],
+                    $fieldListProvider->getFieldValues($product)
+                );
+            }
         }
 
         return $data;

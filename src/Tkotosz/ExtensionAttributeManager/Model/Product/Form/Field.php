@@ -13,11 +13,15 @@ abstract class Field
     /** @var int*/
     protected $sortOrder;
 
-    public function __construct(string $id, string $label, int $sortOrder = 1)
+    /** @var string */
+    protected $description;
+
+    public function __construct(string $id, string $label, int $sortOrder = 1, string $description = '')
     {
         $this->id = $id;
         $this->label = $label;
         $this->sortOrder = $sortOrder;
+        $this->description = $description;
     }
 
     abstract public function toUiComponentConfigArray(): array;

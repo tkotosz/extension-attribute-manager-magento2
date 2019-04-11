@@ -2,12 +2,12 @@
 
 namespace Tkotosz\ExtensionAttributeManager\Model\Product\Form\Field;
 
+use Magento\Ui\Component\Form\Element\Checkbox;
 use Magento\Ui\Component\Form\Element\DataType\Text;
-use Magento\Ui\Component\Form\Element\Input;
 use Magento\Ui\Component\Form\Field as UiComponentField;
 use Tkotosz\ExtensionAttributeManager\Model\Product\Form\Field;
 
-class TextField extends Field
+class CheckboxField extends Field
 {
     public function toUiComponentConfigArray(): array
     {
@@ -22,7 +22,13 @@ class TextField extends Field
                             'dataScope' => $this->id,
                             'sortOrder' => $this->sortOrder,
                             'notice' => $this->description,
-                            'formElement' => Input::NAME
+                            'formElement' => Checkbox::NAME,
+                            'prefer' => 'toggle',
+                            'valueMap' => [
+                                'true' => 1,
+                                'false' => 0
+                            ],
+                            'default' => 0
                         ],
                     ],
                 ],
