@@ -4,19 +4,18 @@ namespace Tkotosz\ExtensionAttributeManager\Observer;
 
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Tkotosz\ExtensionAttributeManager\Api\ProductExtensionAttributeManagerContainerInterface;
+use Tkotosz\ExtensionAttributeManager\Api\ProductExtensionAttribute\ManagerContainerInterface;
 
 class AdminProductSaveAfterObserver implements ObserverInterface
 {
     /**
-     * @var ProductExtensionAttributeManagerContainerInterface
+     * @var ManagerContainerInterface
      */
-    private $productExtensionAttributeManagerProvider;
+    private $productExtensionAttributeManagerContainer;
 
-    public function __construct(
-        ProductExtensionAttributeManagerContainerInterface $productExtensionAttributeManagerProvider
-    ) {
-        $this->productExtensionAttributeManagerProvider = $productExtensionAttributeManagerProvider;
+    public function __construct(ManagerContainerInterface $productExtensionAttributeManagerContainer)
+    {
+        $this->productExtensionAttributeManagerContainer = $productExtensionAttributeManagerContainer;
     }
 
     public function execute(Observer $observer)
@@ -24,7 +23,7 @@ class AdminProductSaveAfterObserver implements ObserverInterface
         $formData = $observer->getEvent()->getData('controller')->getRequest()->getPost('product', []);
         $product = $observer->getEvent()->getData('product');
 
-        foreach ($this->productExtensionAttributeManagerProvider->getAll() as $productExtensionAttributeManager) {
+        foreach ($this->productExtensionAttributeManagerContainer->getAll() as $productExtensionAttributeManager) {
             $productExtensionAttributeManager->onSaveProductInAdmin($product, $formData);
         }
     }
